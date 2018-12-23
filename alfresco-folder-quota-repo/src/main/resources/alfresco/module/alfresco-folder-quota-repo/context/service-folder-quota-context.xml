@@ -56,5 +56,11 @@
 	    <property name="nodeService" ref="NodeService"/>
     </bean>
     
+	
+	<bean id="webscript.es.keensoft.myfiles.fileSize.get" 
+	      class="es.keensoft.alfresco.action.webscript.FileSizeWebScript" parent="webscript">
+	      <property name="nodeService" ref="NodeService"/>
+    </bean>
+
 
 </beans>
