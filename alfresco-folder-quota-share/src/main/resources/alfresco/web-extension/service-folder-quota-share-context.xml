@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<beans>
+    
+    <!-- ======================== -->
+    <!-- LOAD INTERNAL PROPERTIES -->
+	<!-- ======================== -->
+	
+    <!-- Add module specific messages and labels -->
+	<bean id="service-folder-quota-share.i18n.resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
+		<property name="resourceBundles">
+			<list>
+				<value>alfresco.web-extension.messages.folder-quota-actions</value>
+				<!-- <value>alfresco.module.${project.artifactId}.messages.folder-quota-actions</value> -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ======================== -->
+    <!-- LOAD SHARE-CONFIG-CUSTOM -->
+	<!-- ======================== -->
+	<!-- 
+	<bean id="service-folder-quota-share.config" class="org.springframework.extensions.config.ConfigBootstrap"
+		init-method="register">
+		<property name="configService" ref="web.config" />
+		<property name="configs">
+			<list>
+				<value>classpath:alfresco/web-extension/configs/service-folder-quota-share-config.xml</value>
+			</list>
+		</property>
+	</bean>
+	-->
+	
+	
+	<!-- ======================== -->
+	<!-- EVALUATOR                -->
+	<!-- ======================== -->
+   
+   <bean id="service-folder-quota-share.evaluator.doclib.action.quotas" parent="evaluator.doclib.action.hasAspect">
+      <property name="aspects">
+         <list>
+            <value>fq:quota</value>
+         </list>
+      </property>
+   </bean>
+   
+	<bean id="service-folder-quota-share.evaluator.doclib.user.isadmin" class="es.keensoft.alfresco.repo.evaluator.IsAdminEvaluator" />
+	<bean id="service-folder-quota-share.evaluator.doclib.action.quotas.full" class="es.keensoft.alfresco.repo.evaluator.FullQuotaPercentageEvaluator" />
+	<bean id="service-folder-quota-share.evaluator.doclib.action.quotas.half" class="es.keensoft.alfresco.repo.evaluator.HalfQuotaPercentageEvaluator" />
+	<bean id="service-folder-quota-share.evaluator.doclib.action.quotas.empty" class="es.keensoft.alfresco.repo.evaluator.EmptyQuotaPercentageEvaluator" />
+    
+</beans>

@@ -1,0 +1,113 @@
+<extension>
+    <modules>
+        <!-- This module is dependent on the custom content model setup in the repo-amp module -->
+        <module>
+            <id>service-folder-quota-share-extension</id>
+            <version>1.0</version>
+            <auto-deploy>true</auto-deploy>
+            <configurations>
+            
+				<config evaluator="string-compare" condition="DocumentLibrary">
+				
+					<!-- INDICATOR -->
+				
+					<indicators>
+						<indicator id="indicator.full" index="1"
+								icon="full-quota-16.png"
+								label="service.folder.quota.share.indicator.full" >
+						    <evaluator>service-folder-quota-share.evaluator.doclib.action.quotas</evaluator>
+							<evaluator>service-folder-quota-share.evaluator.doclib.action.quotas.full</evaluator>
+						</indicator>
+						<indicator id="indicator.half" index="1"
+								icon="half-quota-16.png"
+								label="service.folder.quota.share.indicator.half" >
+						    <evaluator>service-folder-quota-share.evaluator.doclib.action.quotas</evaluator>
+							<evaluator>service-folder-quota-share.evaluator.doclib.action.quotas.half</evaluator>
+						</indicator>
+						<indicator id="indicator.empty" index="1"
+								icon="empty-quota-16.png"
+								label="service.folder.quota.share.indicator.empty" >
+						    <evaluator>service-folder-quota-share.evaluator.doclib.action.quotas</evaluator>
+							<evaluator>service-folder-quota-share.evaluator.doclib.action.quotas.empty</evaluator>
+						</indicator>
+					</indicators>
+				</config>  
+				
+				<!-- =================== -->
+				<!-- ACTIONS -->
+				<!-- =================== -->
+				
+				 <config evaluator="string-compare" condition="DocLibActions">
+				        <actions>
+					         <action id="folder-quota" type="javascript">
+					            <param name="function">onActionFormDialog</param>
+					            <param name="itemKind">action</param>
+					            <param name="itemId">folder-quota</param>
+					            <param name="mode">create</param>
+					            <param name="destination">{node.nodeRef}</param>
+					            <param name="successMessage">service.folder.quota.share.message.folder.quota.success</param>
+					            <param name="failureMessage">service.folder.quota.share.message.folder.quota.failure</param>
+								<evaluator>service-folder-quota-share.evaluator.doclib.user.isadmin</evaluator>
+					         </action>	         
+				        </actions>
+				        <actionGroups>
+
+					        <!-- We want the doclib actions to be visible in the
+	                             document-browse and document-details views. -->
+	                        <actionGroup id="document-browse">                       
+	                       		 <action index="400" id="folder-quota" label="service.folder.quota.share.actions.folder.quota" icon="folder-quota-icon"  />
+	                        </actionGroup>
+	                        <actionGroup id="document-details">
+	                       		 <action index="400" id="folder-quota" label="service.folder.quota.share.actions.folder.quota" icon="folder-quota-icon"  />
+	                        </actionGroup>      
+	                        <!-- Action is visible for links to documents on the Browse page -->
+				            <actionGroup id="document-link-browse">
+						         <action index="400" id="folder-quota" label="service.folder.quota.share.actions.folder.quota" icon="folder-quota-icon"  />
+						    </actionGroup>
+						    <!-- Action is visible for link to document on the Document Details page -->
+						    <actionGroup id="document-link-details">
+						         <action index="400" id="folder-quota" label="service.folder.quota.share.actions.folder.quota" icon="folder-quota-icon"  />
+						    </actionGroup>  
+				            
+				        </actionGroups>        
+				    </config>				          	
+
+				<!-- =========================== -->
+				<!-- FORMS -->
+				<!-- =========================== -->
+				
+				<config evaluator="aspect" condition="fq:quota">
+					<forms>
+						<form>
+							<field-visibility>
+								<show id="fq:sizeCurrent" />
+								<show id="fq:sizeQuota" />
+							</field-visibility>
+							<appearance>
+								<set id="quotas" appearance="bordered-panel" label-id="panel.quotas" />
+								<field id="fq:sizeCurrent" set="quotas" label-id="service.folder.quota.share.property.form.size.current" read-only="true"/>
+								<field id="fq:sizeQuota" set="quotas" label-id="service.folder.quota.share.property.form.size.quotas" read-only="true">
+								</field>
+							</appearance>
+						</form>
+					</forms>
+				</config>
+			   <config evaluator="string-compare" condition="folder-quota">
+			      <forms>
+			         <form>
+			            <field-visibility>
+			               <show id="size-quota" />
+			            </field-visibility>
+			            <appearance>
+			               <field id="size-quota" label-id="service.folder.quota.share.label.form.quota">
+			                   <control template="/org/alfresco/components/form/controls/textfield.ftl" />
+			               </field>
+			            </appearance>
+			         </form>
+			      </forms>
+			   </config>				
+				
+            </configurations>
+        </module>
+    </modules>
+</extension>

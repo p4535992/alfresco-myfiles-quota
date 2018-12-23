@@ -1,2 +1,10 @@
 deploy.sh
 .recommenders
+/alfresco-folder-quota-repo/.classpath
+/alfresco-folder-quota-repo/.settings
+/alfresco-folder-quota-repo/target
+/alfresco-folder-quota-share/.project
+/alfresco-folder-quota-share/.settings
+/alfresco-folder-quota-share/target
+/alfresco-folder-quota-share/.classpath
+/alfresco-folder-quota-repo/.project
